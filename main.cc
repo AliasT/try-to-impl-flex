@@ -1,6 +1,8 @@
 #include <SDL2/SDL.h>
 #include <stdio.h>
 
+#include "./flex.cc"
+
 int main(int argc, char *argv[]) {
   // 初始化 SDL
   if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -38,6 +40,26 @@ int main(int argc, char *argv[]) {
   int running = 1;
   SDL_Event event;
 
+  Box box1{
+      .flex_grow = 1,
+      .height = 100,
+      .width = 800,
+      .background =
+          {
+              255,
+              0,
+              10,
+              144,
+          },
+  };
+
+  Box box2{.flex_grow = 2, .height = 20, .background = {100, 0, 0, 255}};
+  Box box3{.flex_grow = 3, .height = 30, .background = {0, 255, 0, 255}};
+
+  flex_add_child(&box1, &box2);
+  flex_add_child(&box1, &box3);
+  // SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+
   while (running) {
     // 事件处理
     while (SDL_PollEvent(&event)) {
@@ -51,11 +73,9 @@ int main(int argc, char *argv[]) {
     SDL_RenderClear(renderer);
 
     // 设置绘制颜色为红色
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    // SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 
-    // 绘制矩形
-    SDL_Rect rect = {200, 150, 400, 300};  // x, y, 宽, 高
-    SDL_RenderFillRect(renderer, &rect);
+    flex_render(renderer, &box1);
 
     // 显示渲染内容
     SDL_RenderPresent(renderer);
