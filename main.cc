@@ -42,23 +42,19 @@ int main(int argc, char *argv[]) {
 
   Box box1{
       .flex_grow = 1,
+      .align_items = AlignType::FlexEnd,
       .height = 100,
       .width = 800,
-      .background =
-          {
-              255,
-              0,
-              10,
-              144,
-          },
+      .background = {28, 107, 160, 204},
   };
 
-  Box box2{.flex_grow = 2, .height = 20, .background = {100, 0, 0, 255}};
-  Box box3{.flex_grow = 3, .height = 30, .background = {0, 255, 0, 255}};
+  Box box2{.flex_grow = 2, .height = 20, .background = {255, 182, 193, 204}};
+  Box box3{.flex_grow = 3, .height = 80, .background = {152, 255, 152, 178}};
+  Box box4{.flex_grow = 4, .height = 100, .background = {255, 140, 0, 229}};
 
   flex_add_child(&box1, &box2);
   flex_add_child(&box1, &box3);
-  // SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+  flex_add_child(&box1, &box4);
 
   while (running) {
     // 事件处理
@@ -69,7 +65,7 @@ int main(int argc, char *argv[]) {
     }
 
     // 设置渲染颜色为黑色（清屏颜色）
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     SDL_RenderClear(renderer);
 
     // 设置绘制颜色为红色
